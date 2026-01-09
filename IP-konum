@@ -1,0 +1,55 @@
+import requests
+from colorama import Fore, Style, init
+import time
+import os
+
+init(autoreset=True)
+
+def temizle():
+    os.system("cls" if os.name == "nt" else "clear")
+
+def banner():
+    print(Fore.GREEN + Style.BRIGHT + r"""
+ █████╗ ██████╗     ██╗      ██████╗  ██████╗ █████╗ ████████╗
+██╔══██╗██╔══██╗    ██║     ██╔═══██╗██╔════╝██╔══██╗╚══██╔══╝
+███████║██████╔╝    ██║     ██║   ██║██║     ███████║   ██║
+██╔══██║██╔═══╝     ██║     ██║   ██║██║     ██╔══██║   ██║
+██║  ██║██║         ███████╗╚██████╔╝╚██████╗██║  ██║   ██║
+╚═╝  ╚═╝╚═╝         ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝   ╚═╝
+""")
+    print(Fore.GREEN + "╔══════════════════════════════════════╗")
+    print(Fore.GREEN + "║   IP KONUM BULUCU - HACKER EDİSYON    ║")
+    print(Fore.GREEN + "╚══════════════════════════════════════╝\n")
+
+while True:
+    temizle()
+    banner()
+
+    ip = input(Fore.GREEN + "~ $ IP adresini gir (çıkış: q): " + Fore.WHITE)
+
+    if ip.lower() == "q":
+        print(Fore.RED + "\n[!] Sistem kapatılıyor...")
+        time.sleep(1)
+        break
+
+    print(Fore.GREEN + "\n[+] Hedef analiz ediliyor...\n")
+    time.sleep(1)
+
+    url = f"http://ip-api.com/json/{ip}?lang=tr"
+    response = requests.get(url)
+    data = response.json()
+
+    if data["status"] == "success":
+        print(Fore.GREEN + Style.BRIGHT + "╔═══════ HEDEF KONUM BİLGİLERİ ═══════╗")
+        print(Fore.GREEN + f"  🌐 IP        : {data['query']}")
+        print(Fore.GREEN + f"  🏳️ Ülke      : {data['country']}")
+        print(Fore.GREEN + f"  🏙️ Şehir     : {data['city']}")
+        print(Fore.GREEN + f"  🗺️ Bölge     : {data['regionName']}")
+        print(Fore.GREEN + f"  🛰️ ISP       : {data['isp']}")
+        print(Fore.GREEN + f"  📍 Enlem     : {data['lat']}")
+        print(Fore.GREEN + f"  📍 Boylam    : {data['lon']}")
+        print(Fore.GREEN + Style.BRIGHT + "╚════════════════════════════════════╝")
+    else:
+        print(Fore.RED + "[!] Geçersiz IP adresi!")
+
+    input(Fore.GREEN + "\n~ $ Devam etmek için ENTER")
